@@ -12,8 +12,8 @@
     <style>
         body {
             background: url('{{ URL::asset('src/images/sys/silver_scales.png') }}');
-            margin:0px;
-            padding:0px;
+            margin: 0px;
+            padding: 0px;
         }
     </style>
 
@@ -22,6 +22,10 @@
 </head>
 <body>
 
+
+@if(Auth::user()->id != $user->id)
+Unauthorized!
+@else
 <div ng-app="validationApp" ng-controller="mainController">
 
     <div id="something" data-json="{{ $user }}"></div>
@@ -30,10 +34,14 @@
         @include('layouts.header')
         <div class="container">
             <div class="panel panel-default col-md-12">
-                <div class="panel-heading"><h1>Signup</h1></div>
+                <div class="panel-heading"><h1>My account</h1></div>
 
+                <div class="alert alert-success fade in" ng-show="showUpdateSuccess">
+
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong>Personal information Successfully Updated!
+                </div>
                 <div class="col-md-offset-5">
-
                     <ul class="list-group" ng-model="error.errorList">
                         <br>
                         <li ng-show="userForm.student_no.$error.required" style="color:red;left:-10px;"><span>Student no is required.</span>
@@ -90,6 +98,6 @@
         </div>
     </treasure-overlay-spinner>
 </div>
-
+@endif
 </body>
 </html>

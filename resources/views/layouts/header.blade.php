@@ -16,9 +16,7 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                @if (Auth::user()->hasRole('admin'))
-                    <li><a href="{{ route('users.index') }}">Users</a></li>
-                @endif
+
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
@@ -33,7 +31,15 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('users.edit', Auth::user()->id) }}"><i class="fa fa-btn fa-user">
-                                    </i>&nbsp;Account</a></li>
+                                    </i>&nbsp;&nbsp;Account</a></li>
+                            @if (Auth::user()->hasRole('admin'))
+                                <li><a href="{{ route('users.approval', Auth::user()->id) }}"><i class="fa fa-check"></i>
+                                        </i>Approvals</a></li>
+                                <li><a href="{{ route('users.approval', Auth::user()->id) }}"><i class="fa fa-graduation-cap"></i>
+                                        </i>Courses & Majors</a></li>
+                                <li><a href="{{ route('users.index', Auth::user()->id) }}"><i class="fa fa-btn fa-users">
+                                        </i>&nbsp;Users</a></li>
+                            @endif
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>&nbsp;Logout</a></li>
                         </ul>
                     </li>

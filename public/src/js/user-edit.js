@@ -1,4 +1,3 @@
-
 /* For DatePicker*/
 $(document).ready(function () {
     var date_input = $('input[name="date"]'); //our date input has the name "date"
@@ -12,7 +11,7 @@ $(document).ready(function () {
 })
 
 /* Start of Angular App*/
-var validationApp = angular.module('validationApp', ['smart-table','treasure-overlay-spinner'], function ($interpolateProvider) {
+var validationApp = angular.module('validationApp', ['smart-table', 'treasure-overlay-spinner'], function ($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 
@@ -21,7 +20,7 @@ var validationApp = angular.module('validationApp', ['smart-table','treasure-ove
 angular.module('validationApp').run(run);
 
 run.$inject = ['$rootScope'];
-function run ($rootScope) {
+function run($rootScope) {
     $rootScope.spinner = {
         active: false,
         on: function () {
@@ -37,40 +36,38 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
 
     $scope.clearUser = false;
     /* Initialize User Input Fields*/
-
-    console.log('user: '+user);
     $scope.user = {
+        'id': user.id,
         'alumni_no': user.alumni_no,
-        'student_no': '000000002',
+        'student_no': user.student_no,
         'first_name': user.first_name,
         'middle_name': user.middle_name,
-        'last_name': 'Cruz',
-        'suffix_name': 'Jr.',
-        'civil_status': 'Single',
-        'gender': 'Male',
-        'bday': '1991-01-01',
-        'email': 'juan@example.com',
-        'password': 'juan123',
-        'passwordConfirm': 'juan123',
-        'landline_no': '0000-00-000',
-        'cellphone_no': '0916-193-2567',
-        'level': 'College',
-        'year': 'Third Year',
-        'course': 'BS Biology',
-        'major': 'Calculus',
-        'motto': 'Study first before entering the kingdom of God',
-        'father': 'Roa Rodrigo Duterte',
-        'is_father_paulinian': 'true',
-        'father_occupation': 'President of the Philippines',
-        'father_office': 'Malacanang Palace',
-        'mother': 'Leila De Lima',
-        'is_mother_paulinian': 'true',
-        'mother_occupation': 'Senator',
-        'mother_office': 'Senate Place',
+        'last_name': user.last_name,
+        'suffix_name': user.suffix_name,
+        'civil_status': user.civil_status,
+        'gender': user.gender,
+        'bday': user.date_of_birth,
+        'email': user.email,
+        'password': '0000000000',
+        'passwordConfirm': '0000000000',
+        'landline_no': user.landline_no,
+        'cellphone_no': user.cellphone_no,
+        'level': user.level,
+        'year': user.year,
+        'course': user.course,
+        'major': user.major,
+        'motto': user.motto_in_life,
+        'father': user.father_name,
+        'is_father_paulinian': (user.is_father_paulinian == 1) ? true : false,
+        'father_occupation': user.father_occupation,
+        'father_office': user.father_office,
+        'mother': user.mother_name,
+        'is_mother_paulinian': (user.is_mother_paulinian == 1) ? true : false,
+        'mother_occupation': user.mother_occupation,
+        'mother_office': user.mother_office,
         'defaultPicture': ''
 
     };
-
 
 
     /*Change Picture*/
@@ -86,7 +83,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         reader.readAsDataURL(element.files[0]);
     }
 
-    $scope.clearUser =  function (isValid){
+    $scope.clearUser = function (isValid) {
         $scope.user = {
             'alumni_no': '',
             'student_no': '',
@@ -125,15 +122,51 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     }
     $scope.submitForm = function (isValid) {
         /* Submit Form for saving*/
-        console.log('isValid: '+isValid);
-        if(isValid){
+        console.log('isValid: ' + isValid);
+        if (isValid) {
             checkEmail();
         }
-
     };
 
+    $scope.showUpdateSuccess = false;
+
+    $scope.updateUser = function (isValid) {
+        if (isValid) {
+            console.log('update record......');
+            console.log('fname: ' + $scope.user.first_name);
+            $scope.spinner.on();
+            $data = {
+                '_token': myToken,
+                'user': $scope.user
+            }
+            $http.post('/api/users/update', $data)
+                .success(function (data, status, headers, config) {
+                    var all = data['all'];
+                    var user = data['user'];
+                    /*   console.log('all: '+JSON.stringify(all));*/
+                    console.log('user: ' + data['fname'] + ', successfully updated!');
+                    $scope.showUpdateSuccess = true;
+
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            $scope.showUpdateSuccess = false;
+                        });
+                    }, 2000);
+
+                    $scope.spinner.off();
+                })
+                .error(function (data, status, headers, config) {
+                    console.log('data: ' + data);
+                    console.log('status: ' + status);
+                    $scope.spinner.off();
+                })
+            ;
+        }
+    }
+
+
     function formValid() {
-        console.log('our form is amazing');
+        console.log('saving record......');
         $scope.spinner.on();
         /* console.log('user: '+JSON.stringify($scope.user));
          console.log('activities: '+JSON.stringify($scope.activities));
@@ -183,9 +216,9 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
                 if (user == 'null') {
                     $scope.myVar = false;
                     formValid();
-                  /*  if ($scope.userForm.$valid) {
+                    /*  if ($scope.userForm.$valid) {
 
-                    }*/
+                     }*/
                 } else {
                     $scope.myVar = true;
                     var userObject = JSON.parse(user);
@@ -205,7 +238,6 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     /* Start of Activity Tab*/
 
 
-
     var activityId = 1;
     $scope.activities = [];
     $scope.showActivityAdd = true;
@@ -219,17 +251,32 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
 
     $scope.IsVisible = false;
     $scope.ShowHide = function () {
-        $scope.activity.activity='';
+        $scope.activity.activity = '';
         $scope.IsVisible = $scope.IsVisible ? false : true;
     }
 
 
     $scope.itemsByPage = 5;
-    for (activityId; activityId < 15; activityId++) {
-        var data = {};
-        data.id = activityId;
-        data.activity = 'activity' + activityId;
-        $scope.activities.push(data);
+
+
+    getUserInvolvements($scope.user.id);
+
+    function getUserInvolvements($user_id) {
+        $http.get('/api/user_involvements/' + $user_id)
+            .success(function (data, status, headers, config) {
+                var my_invs = JSON.stringify(data['involvements']);
+                $.each(JSON.parse(my_invs), function (idx, obj) {
+                    var data = {};
+                    data.id = obj.id;
+                    data.activity = obj.involvement;
+                    $scope.activities.push(data);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                console.log('data: ' + data);
+                console.log('status: ' + status);
+            })
+        ;
     }
 
     $scope.addActivity = function addActivityRow() {
@@ -241,9 +288,36 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $scope.activity.activity = '';
     };
 
+    $scope.addActivityPost = function addActivityRow() {
+        var data = {};
+        data.id = activityId;
+        data.activity = $scope.activity.activity;
+        $scope.activities.push(data);
+        activityId++;
+        $scope.activity.activity = '';
+
+        $data = {
+            '_token': myToken,
+            'user_id': $scope.user.id,
+            'user_involvement':  data.activity,
+        }
+        $http.post('/api/user_involvement/save', $data)
+            .success(function (data, status, headers, config) {
+                var response = JSON.stringify(data['response']);
+                console.log('response: ' + response);
+
+            })
+            .error(function (data, status, headers, config) {
+                console.log('data: ' + data);
+                console.log('status: ' + status);
+                $scope.spinner.off();
+            })
+        ;
+    };
+
     $scope.editInvolvement = function (activity) {
         $scope.activitiesOnEdit = activity;
-        $scope.activity.activity=activity.activity;
+        $scope.activity.activity = activity.activity;
         $scope.showActivityAdd = false;
         $scope.showActivityUpdate = true;
     };
@@ -254,10 +328,57 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $scope.showActivityAdd = true;
         $scope.showActivityUpdate = false;
     };
+
+    $scope.updateActivityPost = function () {
+        $scope.activitiesOnEdit.activity = $scope.activity.activity;
+        $scope.activity.activity = '';
+        $scope.showActivityAdd = true;
+        $scope.showActivityUpdate = false;
+
+        $data = {
+            '_token': myToken,
+            'id': $scope.activitiesOnEdit.id,
+            'user_involvement':  $scope.activitiesOnEdit.activity,
+        }
+        $http.post('/api/user_involvement/update', $data)
+            .success(function (data, status, headers, config) {
+                var response = JSON.stringify(data['response']);
+                console.log('response: ' + response);
+
+            })
+            .error(function (data, status, headers, config) {
+                console.log('data: ' + data);
+                console.log('status: ' + status);
+
+            })
+        ;
+    };
+
     $scope.removeInvolvement = function removeItem(row) {
         var index = $scope.activities.indexOf(row);
         if (index !== -1) {
             $scope.activities.splice(index, 1);
+        }
+    }
+    $scope.removeInvolvementPost = function removeItem(row) {
+        var index = $scope.activities.indexOf(row);
+        if (index !== -1) {
+            $scope.activities.splice(index, 1);
+            $data = {
+                '_token': myToken,
+                'id': row.id
+            }
+            $http.post('/api/user_involvement/delete', $data)
+                .success(function (data, status, headers, config) {
+                    var response = JSON.stringify(data['response']);
+                    console.log('response: ' + response);
+                })
+                .error(function (data, status, headers, config) {
+                    console.log('data: ' + data);
+                    console.log('status: ' + status);
+
+                })
+            ;
         }
     }
 
@@ -277,24 +398,50 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     $scope.member.occupation = '';
     $scope.member.office = '';
 
-    for (memberId; memberId < 3; memberId++) {
-        var data = {};
-        data.id = memberId;
-        data.name = 'name' + memberId;
-        data.relation = 'son';
-        data.before_married = 'name' + memberId;
-        data.residence = 'residence';
-        data.occupation = 'occupation';
-        data.office = 'office';
-        $scope.members.push(data);
+
+    getUserFamily($scope.user.id);
+
+    function getUserFamily($user_id) {
+        $http.get('/api/user_family/' + $user_id)
+            .success(function (data, status, headers, config) {
+                var family = JSON.stringify(data['family']);
+                $.each(JSON.parse(family), function (idx, obj) {
+                    var data = {};
+                    data.id = obj.id;
+                    data.name = obj.name;
+                    data.relation = obj.relation;
+                    data.before_married = obj.name_before_married;
+                    data.residence = obj.address;
+                    data.occupation = obj.occupation;
+                    data.office = obj.office_address;
+                    $scope.members.push(data);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                console.log('data: ' + data);
+                console.log('status: ' + status);
+            })
+        ;
     }
-    $scope.clearMember = function(){
+
+    /*for (memberId; memberId < 3; memberId++) {
+     var data = {};
+     data.id = memberId;
+     data.name = 'name' + memberId;
+     data.relation = 'son';
+     data.before_married = 'name' + memberId;
+     data.residence = 'residence';
+     data.occupation = 'occupation';
+     data.office = 'office';
+     $scope.members.push(data);
+     }*/
+    $scope.clearMember = function () {
         $scope.member = {};
         $scope.showMemberUpdate = false;
         $scope.showMemberAdd = true;
     }
 
-    $scope.editMember = function(member){
+    $scope.editMember = function (member) {
         $scope.memberonEdit = member;
         $scope.member.name = member.name;
         $scope.member.relation = member.relation;
@@ -306,7 +453,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $scope.showMemberUpdate = true;
         $scope.showMemberAdd = false;
     }
-    $scope.updateMember = function(){
+    $scope.updateMember = function () {
         $scope.memberonEdit.name = $scope.member.name;
         $scope.memberonEdit.relation = $scope.member.relation;
         $scope.memberonEdit.before_married = $scope.member.before_married;
@@ -317,6 +464,39 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $scope.showMemberUpdate = false;
         $scope.showMemberAdd = true;
     }
+    $scope.updateMemberPost = function () {
+        $scope.memberonEdit.name = $scope.member.name;
+        $scope.memberonEdit.relation = $scope.member.relation;
+        $scope.memberonEdit.before_married = $scope.member.before_married;
+        $scope.memberonEdit.residence = $scope.member.residence;
+        $scope.memberonEdit.occupation = $scope.member.occupation;
+        $scope.memberonEdit.office = $scope.member.office;
+        $scope.member = {};
+        $scope.showMemberUpdate = false;
+        $scope.showMemberAdd = true;
+
+        $data = {
+            '_token': myToken,
+            'id': $scope.memberonEdit.id,
+            'name':  $scope.memberonEdit.name,
+            'relation':  $scope.memberonEdit.relation,
+            'name_before_married':  $scope.memberonEdit.before_married,
+            'address':  $scope.memberonEdit.residence,
+            'occupation':  $scope.memberonEdit.occupation,
+            'office_address':  $scope.memberonEdit.office
+        }
+        $http.post('/api/user_family/update', $data)
+            .success(function (data, status, headers, config) {
+                var response = JSON.stringify(data['response']);
+                console.log('response: ' + response);
+            })
+            .error(function (data, status, headers, config) {
+                console.log('data: ' + data);
+                console.log('status: ' + status);
+            })
+        ;
+    }
+
     $scope.addMember = function addActivityRow() {
         var data = {};
         data.id = memberId;
@@ -335,10 +515,66 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $scope.member.occupation = '';
         $scope.member.office = '';
     };
+    $scope.addMemberPost = function addActivityRow() {
+        var data = {};
+        data.id = memberId;
+        data.name = $scope.member.name;
+        data.relation = $scope.member.relation;
+        data.before_married = $scope.member.before_married;
+        data.residence = $scope.member.residence;
+        data.occupation = $scope.member.occupation;
+        data.office = $scope.member.office;
+        $scope.members.push(data);
+        memberId++;
+        $scope.member.name = '';
+        $scope.member.relation = '';
+        $scope.member.before_married = '';
+        $scope.member.residence = '';
+        $scope.member.occupation = '';
+        $scope.member.office = '';
+
+        $data = {
+            '_token': myToken,
+            'user_id': $scope.user.id,
+            'name':  data.name,
+            'relation':  data.relation,
+            'before_married':  data.before_married,
+            'residence':  data.residence,
+            'occupation':  data.occupation,
+            'office':  data.office
+        }
+        $http.post('/api/user_family/save', $data)
+            .success(function (data, status, headers, config) {
+                var response = JSON.stringify(data['response']);
+                console.log('response: ' + response);
+            })
+            .error(function (data, status, headers, config) {
+                console.log('data: ' + data);
+                console.log('status: ' + status);
+                $scope.spinner.off();
+            })
+        ;
+    };
     $scope.removeMember = function removeItem(row) {
         var index = $scope.members.indexOf(row);
         if (index !== -1) {
             $scope.members.splice(index, 1);
+
+            $data = {
+                '_token': myToken,
+                'id': row.id
+            }
+            $http.post('/api/user_family/delete', $data)
+                .success(function (data, status, headers, config) {
+                    var response = JSON.stringify(data['response']);
+                    console.log('response: ' + response);
+                })
+                .error(function (data, status, headers, config) {
+                    console.log('data: ' + data);
+                    console.log('status: ' + status);
+
+                })
+            ;
         }
     }
     /* End of Member Tab*/

@@ -36,15 +36,26 @@
                     <br>
 
                 </div>
+                @if(Auth::guest())
+                    <a href="" ng-show="showMemberAdd" ng-click="addMember()" class="btn btn-sm btn-primary ">
+                        <i class="glyphicon glyphicon-plus">
+                        </i> Add
+                    </a>
+                    <a href="" ng-show="showMemberUpdate" ng-click="updateMember()" class="btn btn-sm btn-primary ">
+                        <i class="glyphicon glyphicon-refresh">
+                        </i> Save
+                    </a>
+                @else
+                    <a href="" ng-show="showMemberAdd" ng-click="addMemberPost()" class="btn btn-sm btn-primary ">
+                        <i class="glyphicon glyphicon-plus">
+                        </i> Add
+                    </a>
+                    <a href="" ng-show="showMemberUpdate" ng-click="updateMemberPost()" class="btn btn-sm btn-primary ">
+                        <i class="glyphicon glyphicon-refresh">
+                        </i> Save
+                    </a>
+                @endif
 
-                <a href="" ng-show="showMemberAdd" ng-click="addMember()" class="btn btn-sm btn-primary ">
-                    <i class="glyphicon glyphicon-plus">
-                    </i> Add
-                </a>
-                <a href="" ng-show="showMemberUpdate" ng-click="updateMember()" class="btn btn-sm btn-primary ">
-                    <i class="glyphicon glyphicon-refresh">
-                    </i> Save
-                </a>
             </div>
 
             <br>

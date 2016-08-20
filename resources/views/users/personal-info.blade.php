@@ -7,8 +7,6 @@
             <input type="button" class="btn btn-default pull-right" value="Clear" ng-click="clearUser(userForm.$valid)" ng-show="clearUser"/>
             <br>
         </div>
-
-
     </div>
     <div class="panel-body">
         <div style="margin-left:30px;">
@@ -26,8 +24,8 @@
                         >
                     </div>
                     <div class="row" style="width:180px;margin-top:42px;margin-left:0px; display: inline-block;">
-                        <input type="file" name="imgInp" id="imgInp" class="btn btn-warning form-control imgInp"
-                               style="margin-top:20px;" ng-model="imageSource" type="file"
+                        <input type="file" name="imgInp" name="image" id="image" accept="image/gif, image/jpeg"  class="btn btn-warning form-control image"
+                               style="margin-top:20px;" ng-model="imageSource"
                                onchange="angular.element(this).scope().fileNameChaged(this)">
                     </div>
                 </div>
@@ -36,6 +34,10 @@
                 <div class="row col-md-6" style="width:31%;">
                     <label>Alumni No</label>
                     <input type="text" name="alumni_no" class="form-control" ng-model="user.alumni_no" readonly>
+                    @if(!Auth::guest())
+                        <input type="hidden" name="id" class="form-control" ng-model="user.id" >
+                    @endif
+
                 </div>
                 <div class="row col-md-6" ng-class="{ 'has-error' : !userForm.student_no.$valid  }">
                     <label>Student No</label>
@@ -95,7 +97,12 @@
                  style="width:97.5%;">
                 <div class="row col-md-12">
                     <label>Email</label>
-                    <input type="email" name="email" class="form-control" ng-model="user.email" required email>
+                    @if(Auth::guest())
+                        <input type="email" name="email" class="form-control" ng-model="user.email" required>
+                    @else
+                        <input type="email" name="email" class="form-control" ng-model="user.email" required  readonly >
+                    @endif
+
                 </div>
             </div>
 
@@ -103,15 +110,24 @@
                 <div class="form-group" ng-class="{'has-error':!userForm.password.$valid}">
                     <div class="row col-md-6">
                         <label for="user.password">Password</label>
-                        <input class="form-control" type="password" name="password" required ng-model="user.password"
-                               ng-match="user.passwordConfirm"/>
+                        @if(Auth::guest())
+                            <input class="form-control" type="password" name="password" required ng-model="user.password" ng-match="user.passwordConfirm"/>
+                        @else
+                            <input class="form-control" type="password" name="password" required ng-model="user.password" ng-match="user.passwordConfirm" readonly/>
+                        @endif
+
+
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error':!userForm.passwordConfirm.$valid}">
                     <div class="row col-md-6 ">
                         <label for="user.passwordConfirm">Confirm Password</label>
-                        <input class="form-control" type="password" name="passwordConfirm" required
-                               ng-model="user.passwordConfirm" ng-match="user.password"/>
+                        @if(Auth::guest())
+                            <input class="form-control" type="password" name="passwordConfirm" required ng-model="user.passwordConfirm" ng-match="user.password" />
+                        @else
+                            <input class="form-control" type="password" name="passwordConfirm" required ng-model="user.passwordConfirm" ng-match="user.password"  readonly/>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -219,11 +235,22 @@
                     <input class="form-control" type="text" name="mother_office" ng-model="user.mother_office"/>
 
                 </div>
-                <div class="row col-md-12" style="margin-bottom:40px;">
+                <div class="row col-md-12 text-center" style="margin-bottom:40px;">
                     <br>
+                    @if(Auth::guest())
+                        <div class="btn-group">
+                            <a href="" class="btn btn-default pull-left" ng-click="doBack()">Back</a>
+                            <a href="" class="btn btn-primary pull-right" ng-click="nextInvolvements()">Next</a>
+                        </div>
 
-                    <a href="" class="btn btn-default pull-left" ng-click="doBack()">Back</a>
-                    <a href="" class="btn btn-primary pull-right" ng-click="doBack()">Next</a>
+                    @else
+                        <div class="btn-group ">
+                            <a href="#" class="btn btn-default" ng-click="doBack()">Back</a>
+                            <a href="#" class="btn btn-warning" ng-disabled="userForm.$invalid"
+                               ng-click="updateUser(userForm.$valid)">Update</a>
+                        </div>
+                    @endif
+
                 </div>
             </div>
 

@@ -38,34 +38,35 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
 
     /* Initialize User Input Fields*/
     $scope.user = {
-        'alumni_no': '',
-        'student_no': '000000002',
-        'first_name': 'Juan',
-        'middle_name': 'dela',
-        'last_name': 'Cruz',
-        'suffix_name': 'Jr.',
+        'alumni_no': '12',
+        'student_no': '12',
+        'first_name': 'samp',
+        'middle_name': '',
+        'last_name': 'ple',
+        'suffix_name': '',
         'civil_status': 'Single',
         'gender': 'Male',
-        'bday': '1991-01-01',
-        'email': 'juan@example.com',
-        'password': 'juan123',
-        'passwordConfirm': 'juan123',
-        'landline_no': '0000-00-000',
-        'cellphone_no': '0916-193-2567',
-        'level': 'College',
-        'year': 'Third Year',
-        'course': 'BS Biology',
-        'major': 'Calculus',
-        'motto': 'Study first before entering the kingdom of God',
-        'father': 'Roa Rodrigo Duterte',
-        'is_father_paulinian': 'true',
-        'father_occupation': 'President of the Philippines',
-        'father_office': 'Malacanang Palace',
-        'mother': 'Leila De Lima',
-        'is_mother_paulinian': 'true',
-        'mother_occupation': 'Senator',
-        'mother_office': 'Senate Place',
+        'bday': '2010-01-01',
+        'email': 'sample@example.com',
+        'password': 'sample123',
+        'passwordConfirm': 'sample123',
+        'landline_no': '',
+        'cellphone_no': '',
+        'level': '',
+        'year': '',
+        'course': '',
+        'major': '',
+        'motto': '',
+        'father': '',
+        'is_father_paulinian': '',
+        'father_occupation': '',
+        'father_office': '',
+        'mother': '',
+        'is_mother_paulinian': '',
+        'mother_occupation': '',
+        'mother_office': '',
         'defaultPicture': ''
+
     };
 
     /*Change Picture*/
@@ -128,7 +129,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     };
 
     function formValid() {
-        console.log('our form is amazing');
+        console.log('saving record....');
         $scope.spinner.on();
         /* console.log('user: '+JSON.stringify($scope.user));
          console.log('activities: '+JSON.stringify($scope.activities));
@@ -137,7 +138,8 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
             '_token': myToken,
             'user': $scope.user,
             'activities': $scope.activities,
-            'members': $scope.members
+            'members': $scope.members,
+            'image': $scope.imageSource,
         }
         $http.post('/api/users/save', $data)
             .success(function (data, status, headers, config) {
@@ -209,7 +211,6 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         'id': 0,
         'activity': '',
         'editactivityName': '',
-
     };
 
     $scope.IsVisible = false;
@@ -220,12 +221,12 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
 
 
     $scope.itemsByPage = 5;
-    for (activityId; activityId < 15; activityId++) {
+   /* for (activityId; activityId < 15; activityId++) {
         var data = {};
         data.id = activityId;
         data.activity = 'activity' + activityId;
         $scope.activities.push(data);
-    }
+    }*/
 
     $scope.addActivity = function addActivityRow() {
         var data = {};
@@ -272,7 +273,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     $scope.member.occupation = '';
     $scope.member.office = '';
 
-    for (memberId; memberId < 3; memberId++) {
+    /*for (memberId; memberId < 3; memberId++) {
         var data = {};
         data.id = memberId;
         data.name = 'name' + memberId;
@@ -282,7 +283,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         data.occupation = 'occupation';
         data.office = 'office';
         $scope.members.push(data);
-    }
+    }*/
     $scope.clearMember = function(){
         $scope.member = {};
         $scope.showMemberUpdate = false;

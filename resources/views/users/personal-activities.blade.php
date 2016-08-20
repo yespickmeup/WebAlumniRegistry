@@ -14,12 +14,28 @@
                            id="inputInvolvement"
                            ng-model="activity.activity">
                    <span class="input-group-btn">
-                    <button ng-show="showActivityAdd" class="btn btn-primary" type="button" ng-click="addActivity()">
-                        Add
-                    </button>
-                    <button ng-show="showActivityUpdate" class="btn btn-primary" type="button" ng-click="updateActivity()">
-                        Update
-                    </button>
+                       @if(Auth::guest())
+                           <button ng-show="showActivityAdd" class="btn btn-primary" type="button"
+                                   ng-click="addActivity()">
+                               Add
+                           </button>
+                           <button ng-show="showActivityUpdate" class="btn btn-primary" type="button"
+                                   ng-click="updateActivity()">
+                               Update
+                           </button>
+                       @else
+                           <button ng-show="showActivityAdd" class="btn btn-primary" type="button"
+                                   ng-click="addActivityPost()">
+                               Add
+                           </button>
+                           <button ng-show="showActivityUpdate" class="btn btn-primary" type="button"
+                                   ng-click="updateActivityPost()">
+                               Update
+                           </button>
+                       @endif
+
+
+
                    </span>
                 </div>
             </div>
@@ -48,10 +64,18 @@
                     </button>
                 </td>
                 <td>
-                    <button type="button" ng-click="removeInvolvement(activity)" class="btn btn-sm btn-danger">
-                        <i class="glyphicon glyphicon-remove-circle">
-                        </i>
-                    </button>
+                    @if(Auth::guest())
+                        <button type="button" ng-click="removeInvolvement(activity)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle">
+                            </i>
+                        </button>
+                    @else
+                        <button type="button" ng-click="removeInvolvementPost(activity)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle">
+                            </i>
+                        </button>
+                    @endif
+
                 </td>
             </tr>
             </tbody>

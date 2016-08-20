@@ -22,9 +22,14 @@
     <div class="container  ">
 
         <div class="panel panel-default col-md-12">
-            <div class="panel-heading"><h1>Signup</h1></div>
+            <div class="panel-heading">
+            <h1>Signup</h1>
+
+            </div>
             <div class="col-md-offset-5">
                 <br>
+
+
                 <ul class="list-group" ng-model="error.errorList">
                     <li ng-show="userForm.student_no.$error.required" style="color:red;left:-10px;"><span>Student no is required.</span>
                     </li>
@@ -50,7 +55,7 @@
 
             </div>
             <div class="panel-body">
-                <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate class="tab-form-demo" style="" ng-model="userForm">
+                <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate class="tab-form-demo" style="" ng-model="userForm" enctype="multipart/form-data">
                     <tabs id="Tabs" ng-model="Tabs">
                         <pane title="Personal Information" ng-model="pane1">
                             @include('users.personal-info')
@@ -68,7 +73,7 @@
                     </tabs>
                     <script>
                         var myToken = '{{ Session::token() }}';
-                        var loginUrl = '{{ url('/login') }}';
+                        var loginUrl = '{{ url('/registered') }}';
                     </script>
                 </form>
             </div>

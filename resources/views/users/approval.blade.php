@@ -18,7 +18,7 @@
         }
     </style>
 
-    <script src="{{ URL::to('src/js/users-index.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::to('src/js/user-approval.js') }}" type="text/javascript"></script>
     <script src="{{ URL::to('src/js/treasure-overlay-spinner.js') }}" type="text/javascript"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
         @include('layouts.header')
         <div class="container">
             <div class="panel panel-default col-md-12">
-                <div class="panel-heading"><h1>Users</h1></div>
+                <div class="panel-heading"><h1>Account Approval</h1></div>
                 <div class="alert alert-success fade in" ng-show="showUpdateSuccess">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Success! </strong>Account <b>[<%userName%>]</b>, successfully approved!
@@ -41,18 +41,18 @@
                         <thead>
                         <tr>
                             <th colspan="10"><input st-search="" class="form-control" placeholder="Search ..."
-                                                    type="text"/></th>
+                                                   type="text"/></th>
                         </tr>
                         <tr>
                             <th st-sort="user.first_name">First Name</th>
                             <th style="width:100px;" st-sort="user.middle_name">Middle Name</th>
                             <th st-sort="user.last_name">Last Name</th>
-                            <th st-sort="user.roles">Roles</th>
                             <th style="width:30px;" st-sort="user.gender">Gender</th>
                             <th style="width:50px;" st-sort="user.civil_status">Status</th>
                             <th style="width:100px;" st-sort="user.bday">BirthDate</th>
                             <th st-sort="user.father">Father</th>
                             <th st-sort="user.mother">Mother</th>
+                            <th style="width:30px;"></th>
                             <th style="width:30px;"></th>
 
                         </tr>
@@ -64,29 +64,25 @@
                             <td><%user.first_name%></td>
                             <td><%user.middle_name%></td>
                             <td><%user.last_name%></td>
-
-                            <td>
-                                <%user.roles%>
-                                @if(!empty($user->roles))
-                                    @foreach($user->roles as $v)
-                                        <label class="label label-success">{{ $v->display_name }}</label>
-                                    @endforeach
-                                @endif
-
-                            </td>
                             <td><%user.gender%></td>
                             <td><%user.civil_status%></td>
                             <td><%user.bday%></td>
                             <td><%user.father%></td>
                             <td><%user.mother%></td>
-
                             <td>
-                                <button type="button" ng-click="deleteUser(user)"
-                                        class="btn btn-sm btn-warning">
-                                    <i class="glyphicon glyphicon-remove-sign">
+                                <button type="button" class="btn btn-sm btn-default "
+                                        ng-click="viewUser(user)">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="approveUser(user)"
+                                        class="btn btn-sm btn-success">
+                                    <i class="glyphicon glyphicon-ok-sign">
                                     </i>
                                 </button>
                             </td>
+
                         </tr>
                         </tbody>
                         <tfoot>
@@ -96,6 +92,7 @@
                             </td>
                         </tr>
                         </tfoot>
+
                     </table>
                     <script>
                         var myToken = '{{ Session::token() }}';

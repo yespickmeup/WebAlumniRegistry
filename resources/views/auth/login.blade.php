@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <title>Alumni Registry</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
@@ -18,7 +18,7 @@
             -o-background-size: cover;
         }
         .onesidedropshadow {
-          
+
             -webkit-box-shadow: 0 5px 10px -5px black;
             -moz-box-shadow: 0 5px 10px -5px black;
             box-shadow: 0 5px 10px -5px black;
@@ -33,9 +33,9 @@
         <div class="col-md-6 col-md-offset-3 onesidedropshadow">
             <div class="panel panel-default ">
                 <header class="panel-heading">
-                <h3>Login with your credentials</h3>
+                <h3>Login with your credentials!</h3>
                 </header>
-                
+
                <br><br>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}" >
@@ -43,10 +43,8 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
                             <div class="col-md-7">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -54,13 +52,11 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-7">
                                 <input id="password" type="password" class="form-control" name="password">
-
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -77,9 +73,9 @@
 
                             <!--  <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> -->
                         </div>
-                          
+
                              <br> <br>
-                       
+
                     </form>
                 </div>
             </div>
