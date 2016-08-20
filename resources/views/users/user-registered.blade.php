@@ -50,7 +50,7 @@
 </head>
 <body ng-app="fileUpload" ng-controller="MyCtrl">
 <div class="container">
-    <div class="content col-md-offset-7">
+    <div class="content ">
         <div class="title">
             <label style="font-size: 50px;">Success!</label><br>
             <label style="font-size: 25px;">Kindly proceed to the admin office for approval of your account!</label><br>
@@ -59,8 +59,8 @@
                     onclick="window.location='{{ url("/login") }}'">OK
             </button>
 
-            <br>
-            <h4>Upload on file select</h4>
+           {{-- <br>
+            <h4>Upload on file select</h4>--}}
             {{--  @if (count($errors) > 0)
                   <div class="alert alert-danger">
                       <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -83,7 +83,7 @@
                   </div>
               </form>--}}
 
-            <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+          {{--  <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
                     accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
                 Select File
             </button>
@@ -93,7 +93,7 @@
                 <%f.name%> <%errFile.name%> <%errFile.$error%> <%errFile.$errorParam%>
                 <span class="progress" ng-show="f.progress >= 0"></span>
                 <%errorMsg%>
-            </div>
+            </div>--}}
 
             <script>
                 var myToken = '{{ Session::token() }}';
