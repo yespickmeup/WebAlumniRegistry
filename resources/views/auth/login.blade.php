@@ -33,9 +33,9 @@
         <div class="col-md-6 col-md-offset-3 onesidedropshadow">
             <div class="panel panel-default ">
                 <header class="panel-heading">
-                <h3>Login with your credentials!</h3>
+                <h3>Please, Login with your credentials!</h3>
                 </header>
-
+    
                <br><br>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}" >
