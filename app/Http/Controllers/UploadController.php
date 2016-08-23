@@ -42,21 +42,24 @@ class UploadController extends Controller
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:15000',
         ]);
-
+        $filename = $request->get('filename');
         $image = $request->file('image');
-        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+        $input['imagename'] = $filename.'.'.$image->getClientOriginalExtension();
         $destinationPath = public_path('/src/images/uploads');
         $image->move($destinationPath, $input['imagename']);
         return back()->with('success','Image Upload successful');
     }
+
+
     public function fileUpload2(Request $request)
     {
+
         $data = $request->json()->all();
         $image = $request->file('file');
-        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+        $filename = $request->get('filename');
+        $input['imagename'] =  $filename.'.'.$image->getClientOriginalExtension();
         $destinationPath = public_path('/src/images/uploads');
         $image->move($destinationPath, $input['imagename']);
-
 
 
         return response()->json(['data'=>$image]);

@@ -87,6 +87,23 @@
             </tr>
             </tfoot>
         </table>
+        <div class="row col-md-12 text-center" style="margin-bottom:40px;">
+            <br>
+            @if(Auth::guest())
+                <div class="btn-group">
+                    <a href="" class="btn btn-default pull-left" ng-click="doBack()">Previous</a>
+                    <a href="" class="btn btn-primary pull-right" ng-click="nextInvolvements()">Next</a>
+                </div>
+
+            @else
+                <div class="btn-group ">
+                    <a href="#" class="btn btn-default" ng-click="doBack()">Previous</a>
+                    <a href="#" class="btn btn-warning" ng-disabled="userForm.$invalid"
+                       ng-click="updateUser(userForm.$valid)">Next</a>
+                </div>
+            @endif
+
+        </div>
     </div>
 
 

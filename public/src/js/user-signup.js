@@ -1,4 +1,3 @@
-
 /* For DatePicker*/
 $(document).ready(function () {
     var date_input = $('input[name="date"]'); //our date input has the name "date"
@@ -12,16 +11,14 @@ $(document).ready(function () {
 })
 
 /* Start of Angular App*/
-var validationApp = angular.module('validationApp', ['smart-table','treasure-overlay-spinner'], function ($interpolateProvider) {
+var validationApp = angular.module('validationApp', ['ngFileUpload', 'smart-table', 'treasure-overlay-spinner', 'ui.bootstrap', 'tabs'], function ($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
-
 });
 
 angular.module('validationApp').run(run);
-
 run.$inject = ['$rootScope'];
-function run ($rootScope) {
+function run($rootScope) {
     $rootScope.spinner = {
         active: false,
         on: function () {
@@ -33,23 +30,33 @@ function run ($rootScope) {
     };
 }
 
-validationApp.controller('mainController', ['$scope', '$http', function ($scope, $http) {
 
+validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeout', function ($scope, $http, Upload, $timeout) {
+
+
+    $scope.photoFile = null;
+
+    $scope.uploadFiles = function (file, errFiles) {
+
+        $scope.photoFile = file;
+
+        console.log('image src: '+ $scope.photoFile);
+    }
 
     /* Initialize User Input Fields*/
     $scope.user = {
-        'alumni_no': '12',
-        'student_no': '12',
-        'first_name': 'samp',
-        'middle_name': '',
-        'last_name': 'ple',
+        'alumni_no': '',
+        'student_no': '1',
+        'first_name': '1',
+        'middle_name': '2',
+        'last_name': '3',
         'suffix_name': '',
-        'civil_status': 'Single',
-        'gender': 'Male',
-        'bday': '2010-01-01',
-        'email': 'sample@example.com',
-        'password': 'sample123',
-        'passwordConfirm': 'sample123',
+        'civil_status': '',
+        'gender': '',
+        'bday': '2000-01-01',
+        'email': '1@example.com',
+        'password': '1234567',
+        'passwordConfirm': '1234567',
         'landline_no': '',
         'cellphone_no': '',
         'level': '',
@@ -72,17 +79,18 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     /*Change Picture*/
     $scope.imageSource = $scope.defaultPicture;
     $scope.fileNameChaged = function (element) {
+
+        $scope.photoFile = element.files[0];
         var reader = new FileReader();
         reader.onload = function (e) {
             $scope.$apply(function () {
                 $scope.imageSource = e.target.result;
-
             });
         }
         reader.readAsDataURL(element.files[0]);
     }
 
-    $scope.clearUser =  function (isValid){
+    $scope.clearUser = function (isValid) {
         $scope.user = {
             'alumni_no': '',
             'student_no': '',
@@ -121,11 +129,10 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     }
     $scope.submitForm = function (isValid) {
         /* Submit Form for saving*/
-        console.log('isValid: '+isValid);
-        if(isValid){
-            checkEmail();
+        console.log('isValid: ' + isValid);
+        if (isValid) {
+             checkEmail();
         }
-
     };
 
     function formValid() {
@@ -139,7 +146,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
             'user': $scope.user,
             'activities': $scope.activities,
             'members': $scope.members,
-            'image': $scope.imageSource,
+            'image1': $scope.photoFile,
         }
         $http.post('/api/users/save', $data)
             .success(function (data, status, headers, config) {
@@ -153,17 +160,44 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
                 /* console.log('user: '+JSON.stringify(user));*/
                 /*  console.log('collection: '+JSON.stringify(collection));
                  console.log('activity_names: '+JSON.stringify(activity_names));*/
-                console.log('name: ' + name);
+               /* console.log('name: ' + name);*/
+
+                uploadImage(user.alumni_no);
                 window.location.href = loginUrl;
                 $scope.spinner.off();
             })
             .error(function (data, status, headers, config) {
 
-                console.log('data: ' + data);
+                console.log('image: ' +  data['image']);
                 console.log('status: ' + status);
                 $scope.spinner.off();
             })
         ;
+
+        function uploadImage(filename){
+            if ($scope.photoFile) {
+                $scope.photoFile.upload = Upload.upload({
+                    url: '/fileUpload2',
+                    data: {
+                        _token: myToken,
+                        file: $scope.photoFile,
+                        filename: filename,
+                    }
+                });
+                $scope.photoFile.upload.then(function (response) {
+                    $timeout(function () {
+                        $scope.photoFile.result = response.data;
+                        console.log(response.data);
+                    });
+                }, function (response) {
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    $scope.photoFile.progress = Math.min(100, parseInt(100.0 *
+                        evt.loaded / evt.total));
+                });
+            }
+        }
     }
 
     function checkEmail() {
@@ -180,9 +214,9 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
                 if (user == 'null') {
                     $scope.myVar = false;
                     formValid();
-                  /*  if ($scope.userForm.$valid) {
+                    /*  if ($scope.userForm.$valid) {
 
-                    }*/
+                     }*/
                 } else {
                     $scope.myVar = true;
                     var userObject = JSON.parse(user);
@@ -202,7 +236,6 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     /* Start of Activity Tab*/
 
 
-
     var activityId = 1;
     $scope.activities = [];
     $scope.showActivityAdd = true;
@@ -215,18 +248,18 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
 
     $scope.IsVisible = false;
     $scope.ShowHide = function () {
-        $scope.activity.activity='';
+        $scope.activity.activity = '';
         $scope.IsVisible = $scope.IsVisible ? false : true;
     }
 
 
     $scope.itemsByPage = 5;
-   /* for (activityId; activityId < 15; activityId++) {
-        var data = {};
-        data.id = activityId;
-        data.activity = 'activity' + activityId;
-        $scope.activities.push(data);
-    }*/
+    /* for (activityId; activityId < 15; activityId++) {
+     var data = {};
+     data.id = activityId;
+     data.activity = 'activity' + activityId;
+     $scope.activities.push(data);
+     }*/
 
     $scope.addActivity = function addActivityRow() {
         var data = {};
@@ -239,7 +272,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
 
     $scope.editInvolvement = function (activity) {
         $scope.activitiesOnEdit = activity;
-        $scope.activity.activity=activity.activity;
+        $scope.activity.activity = activity.activity;
         $scope.showActivityAdd = false;
         $scope.showActivityUpdate = true;
     };
@@ -274,23 +307,23 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
     $scope.member.office = '';
 
     /*for (memberId; memberId < 3; memberId++) {
-        var data = {};
-        data.id = memberId;
-        data.name = 'name' + memberId;
-        data.relation = 'son';
-        data.before_married = 'name' + memberId;
-        data.residence = 'residence';
-        data.occupation = 'occupation';
-        data.office = 'office';
-        $scope.members.push(data);
-    }*/
-    $scope.clearMember = function(){
+     var data = {};
+     data.id = memberId;
+     data.name = 'name' + memberId;
+     data.relation = 'son';
+     data.before_married = 'name' + memberId;
+     data.residence = 'residence';
+     data.occupation = 'occupation';
+     data.office = 'office';
+     $scope.members.push(data);
+     }*/
+    $scope.clearMember = function () {
         $scope.member = {};
         $scope.showMemberUpdate = false;
         $scope.showMemberAdd = true;
     }
 
-    $scope.editMember = function(member){
+    $scope.editMember = function (member) {
         $scope.memberonEdit = member;
         $scope.member.name = member.name;
         $scope.member.relation = member.relation;
@@ -302,7 +335,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $scope.showMemberUpdate = true;
         $scope.showMemberAdd = false;
     }
-    $scope.updateMember = function(){
+    $scope.updateMember = function () {
         $scope.memberonEdit.name = $scope.member.name;
         $scope.memberonEdit.relation = $scope.member.relation;
         $scope.memberonEdit.before_married = $scope.member.before_married;
@@ -337,6 +370,8 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
             $scope.members.splice(index, 1);
         }
     }
+
+
     /* End of Member Tab*/
 
 }]);
@@ -351,7 +386,7 @@ validationApp.directive('tabs', function () {
         scope: {},
         controller: ["$scope", function ($scope) {
             var panes = $scope.panes = [];
-
+            $scope.mypanes = panes;
             $scope.select = function (pane) {
                 angular.forEach(panes, function (pane) {
                     pane.selected = false;
@@ -363,6 +398,7 @@ validationApp.directive('tabs', function () {
                 if (panes.length == 0) $scope.select(pane);
                 panes.push(pane);
             }
+
         }],
         template: '<div class="tabbable">' +
         '<ul class="nav nav-tabs">' +

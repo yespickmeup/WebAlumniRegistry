@@ -4,7 +4,8 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="form-group">
-            <input type="button" class="btn btn-default pull-right" value="Clear" ng-click="clearUser(userForm.$valid)" ng-show="clearUser"/>
+            <input type="button" class="btn btn-default pull-right" value="Clear" ng-click="clearUser(userForm.$valid)"
+                   ng-show="clearUser"/>
             <br>
         </div>
     </div>
@@ -16,17 +17,32 @@
                     <div style="background-color: whitesmoke; width:180px; height: 140px;margin-top:0px;">
                         <input type="hidden" ng-model="defaultPicture"
                                value="{{ URL::asset('src/images/sys/picture.jpg') }}">
-                        <img src="{{ URL::asset('src/images/sys/picture.jpg') }}"
-                             class="img-thumbnail imgInp img-responsive"
-                             alt="Cinque Terre"
-                             width="200px" height="120px%;"
-                             ng-src="<%imageSource%>"
-                        >
+                        @if(!Auth::guest())
+                            <img class="img-thumbnail imgInp img-responsive"
+                                    alt="Cinque Terre"
+                                    width="200px" height="120px%;"
+                                    ng-src="<%imageSource%>"
+                            >
+                        @else
+                            <img src="{{ URL::asset('src/images/sys/picture.jpg') }}"
+                                 class="img-thumbnail imgInp img-responsive"
+                                 alt="Cinque Terre"
+                                 width="200px" height="120px%;"
+                                 ng-src="<%imageSource%>"
+                            >
+                        @endif
+
                     </div>
                     <div class="row" style="width:180px;margin-top:42px;margin-left:0px; display: inline-block;">
-                        <input type="file" name="imgInp" name="image" id="image" accept="image/gif, image/jpeg"  class="btn btn-warning form-control image"
-                               style="margin-top:20px;" ng-model="imageSource"
+                        <input type="file" name="image" id="image" accept="image/jpeg"
+                               class="btn btn-warning form-control image"
+                               style="margin-top:20px;" ng-model="imageSource" ngf-max-height="1000"
+                               ngf-max-size="100MB"
                                onchange="angular.element(this).scope().fileNameChaged(this)">
+                        {{-- <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+                                 accept="image/*" ngf-max-height="1000" ngf-max-size="10MB">
+                             Select File
+                         </button>--}}
                     </div>
                 </div>
             </div>
@@ -35,7 +51,7 @@
                     <label>Alumni No</label>
                     <input type="text" name="alumni_no" class="form-control" ng-model="user.alumni_no" readonly>
                     @if(!Auth::guest())
-                        <input type="hidden" name="id" class="form-control" ng-model="user.id" >
+                        <input type="hidden" name="id" class="form-control" ng-model="user.id">
                     @endif
 
                 </div>
@@ -100,7 +116,7 @@
                     @if(Auth::guest())
                         <input type="email" name="email" class="form-control" ng-model="user.email" required>
                     @else
-                        <input type="email" name="email" class="form-control" ng-model="user.email" required  readonly >
+                        <input type="email" name="email" class="form-control" ng-model="user.email" required readonly>
                     @endif
 
                 </div>
@@ -111,9 +127,11 @@
                     <div class="row col-md-6">
                         <label for="user.password">Password</label>
                         @if(Auth::guest())
-                            <input class="form-control" type="password" name="password" required ng-model="user.password" ng-match="user.passwordConfirm"/>
+                            <input class="form-control" type="password" name="password" required
+                                   ng-model="user.password" ng-match="user.passwordConfirm"/>
                         @else
-                            <input class="form-control" type="password" name="password" required ng-model="user.password" ng-match="user.passwordConfirm" readonly/>
+                            <input class="form-control" type="password" name="password" required
+                                   ng-model="user.password" ng-match="user.passwordConfirm" readonly/>
                         @endif
 
 
@@ -123,9 +141,11 @@
                     <div class="row col-md-6 ">
                         <label for="user.passwordConfirm">Confirm Password</label>
                         @if(Auth::guest())
-                            <input class="form-control" type="password" name="passwordConfirm" required ng-model="user.passwordConfirm" ng-match="user.password" />
+                            <input class="form-control" type="password" name="passwordConfirm" required
+                                   ng-model="user.passwordConfirm" ng-match="user.password"/>
                         @else
-                            <input class="form-control" type="password" name="passwordConfirm" required ng-model="user.passwordConfirm" ng-match="user.password"  readonly/>
+                            <input class="form-control" type="password" name="passwordConfirm" required
+                                   ng-model="user.passwordConfirm" ng-match="user.password" readonly/>
                         @endif
 
                     </div>
@@ -240,7 +260,7 @@
                     @if(Auth::guest())
                         <div class="btn-group">
                             <a href="" class="btn btn-default pull-left" ng-click="doBack()">Back</a>
-                            <a href="" class="btn btn-primary pull-right" ng-click="nextInvolvements()">Next</a>
+                            <a href="" class="btn btn-primary pull-right" ng-click="selectPersonalActivitiesTab(pane1)">Next</a>
                         </div>
 
                     @else

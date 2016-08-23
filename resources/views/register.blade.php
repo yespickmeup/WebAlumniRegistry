@@ -5,6 +5,8 @@
     @include('layouts.css')
     @include('layouts.js')
     <link rel="stylesheet" href="{{ URL::to('src/css/register.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::to('src/css/angular.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::to('src/css/animate.min.css') }}"/>
     <link rel="stylesheet" href="{{ URL::to('src/css/treasure-overlay-spinner.css') }}"/>
     <style>
         body {
@@ -12,8 +14,13 @@
         }
     </style>
 
+    <script src="{{ URL::to('src/js/file_upload/ng-file-upload.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::to('src/js/file_upload/ng-file-upload-shim.js') }}" type="text/javascript"></script>
     <script src="{{ URL::to('src/js/user-signup.js') }}" type="text/javascript"></script>
     <script src="{{ URL::to('src/js/treasure-overlay-spinner.js') }}" type="text/javascript"></script>
+
+    <script src="{{ URL::to('src/js/modules/tabs.js') }}" type="text/javascript"></script>
+
 </head>
 <body>
 
@@ -77,7 +84,17 @@
                     </script>
                 </form>
             </div>
+
+
         </div>
+
+
+
+
+
+
+
+
 
     </div>
     </treasure-overlay-spinner>

@@ -59,9 +59,9 @@
                     onclick="window.location='{{ url("/login") }}'">OK
             </button>
 
-           {{-- <br>
-            <h4>Upload on file select</h4>--}}
-            {{--  @if (count($errors) > 0)
+            {{--<br>
+            <h4>Upload on file select</h4>
+              @if (count($errors) > 0)
                   <div class="alert alert-danger">
                       <strong>Whoops!</strong> There were some problems with your input.<br><br>
                       <ul>
@@ -84,7 +84,7 @@
               </form>--}}
 
           {{--  <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
-                    accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                    accept="image/*" ngf-max-height="1000" ngf-max-size="10MB">
                 Select File
             </button>
             <br><br>

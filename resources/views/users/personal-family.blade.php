@@ -36,6 +36,7 @@
                     <br>
 
                 </div>
+
                 @if(Auth::guest())
                     <a href="" ng-show="showMemberAdd" ng-click="addMember()" class="btn btn-sm btn-primary ">
                         <i class="glyphicon glyphicon-plus">
@@ -104,11 +105,27 @@
                 </tfoot>
             </table>
 
+            <div class="row col-md-12 text-center" style="margin-bottom:40px;">
+                <br>
+                @if(Auth::guest())
+                    <div class="btn-group">
+                        <a href="" class="btn btn-default pull-left" ng-click="doBack()">Previous</a>
+                        <a href="" class="btn btn-success pull-right"  ng-disabled="userForm.$invalid"
+                           ng-click="submitForm(userForm.$valid)">Save</a>
+                    </div>
 
-            <div class="row col-md-offset-6" style="margin-bottom:40px;">
+                @else
+                    <div class="btn-group ">
+                        <a href="#" class="btn btn-default" ng-click="doBack()">Previous</a>
+
+                    </div>
+                @endif
+
+            </div>
+           {{-- <div class="row col-md-offset-6" style="margin-bottom:40px;">
                 <a href="" class="btn btn-success btn-lg" ng-disabled="userForm.$invalid"
                    ng-click="submitForm(userForm.$valid)">Submit</a>
-            </div>
+            </div>--}}
         </div>
     </div>
 </div>

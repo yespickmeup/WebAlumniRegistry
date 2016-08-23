@@ -65,11 +65,11 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         'is_mother_paulinian': (user.is_mother_paulinian == 1) ? true : false,
         'mother_occupation': user.mother_occupation,
         'mother_office': user.mother_office,
-        'defaultPicture': ''
-
+        'defaultPicture': '',
+        'imageSource': publicUrl+user.alumni_no+'.jpg'
     };
 
-
+    console.log('path: '+$scope.user.imageSource);
     /*Change Picture*/
     $scope.imageSource = $scope.defaultPicture;
     $scope.fileNameChaged = function (element) {

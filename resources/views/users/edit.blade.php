@@ -89,7 +89,7 @@ Unauthorized!
                             var myToken = '{{ Session::token() }}';
                             var loginUrl = '{{ url('/login') }}';
                             var user = JSON.parse(decodeURIComponent(something.getAttribute("data-json")))
-
+                            var publicUrl = '{{URL::asset('/'). '' . 'src/images/uploads/'}}';
                         </script>
                     </form>
                 </div>

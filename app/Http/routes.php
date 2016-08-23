@@ -55,6 +55,8 @@ Route::post('/fileUpload', [
     'as' => 'fileUpload',
     'uses' => 'UploadController@fileUpload'
 ]);
+
+
 Route::post('/fileUpload2', [
     'as' => 'fileUpload2',
     'uses' => 'UploadController@fileUpload2'

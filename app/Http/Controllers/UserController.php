@@ -10,6 +10,7 @@ use DB;
 use Hash;
 use App\UserInvolvement;
 use App\UserAlumniFamilyMember;
+use Intervention\Image\Facades\Image as Image;
 
 class UserController extends Controller
 {
@@ -165,6 +166,12 @@ class UserController extends Controller
             $user->family()->save($family);
         }
 
+
+
+       /* $image = $request->file('image1');
+        $input['imagename'] =  $user->alumni_no .'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/src/images/uploads');
+        $image->move($destinationPath, $input['imagename']);*/
 
         /* return view('test.test-signup')->compact(['data' => $request->json()->all()]);*/
         return response()->json(['all' => $data, 'user' => $user, 'name' => $name, 'activities' => $activities, 'activity_names' => $activity_names]);
