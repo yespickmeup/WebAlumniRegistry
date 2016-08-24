@@ -46,17 +46,17 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
     /* Initialize User Input Fields*/
     $scope.user = {
         'alumni_no': '',
-        'student_no': '1',
-        'first_name': '1',
-        'middle_name': '2',
-        'last_name': '3',
+        'student_no': '',
+        'first_name': '',
+        'middle_name': '',
+        'last_name': '',
         'suffix_name': '',
         'civil_status': '',
         'gender': '',
-        'bday': '2000-01-01',
-        'email': '1@example.com',
-        'password': '1234567',
-        'passwordConfirm': '1234567',
+        'bday': '',
+        'email': '',
+        'password': '',
+        'passwordConfirm': '',
         'landline_no': '',
         'cellphone_no': '',
         'level': '',
@@ -178,11 +178,13 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
             if ($scope.photoFile) {
                 $scope.photoFile.upload = Upload.upload({
                     url: '/fileUpload2',
+
                     data: {
                         _token: myToken,
                         file: $scope.photoFile,
                         filename: filename,
                     }
+
                 });
                 $scope.photoFile.upload.then(function (response) {
                     $timeout(function () {

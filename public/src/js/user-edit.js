@@ -91,9 +91,11 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload', '$timeo
             $scope.photoFile.upload = Upload.upload({
                 url: '/fileUpload2',
                 data: {
+
                     _token: myToken,
                     file: $scope.photoFile,
                     filename: filename,
+
                 }
             });
             $scope.photoFile.upload.then(function (response) {
