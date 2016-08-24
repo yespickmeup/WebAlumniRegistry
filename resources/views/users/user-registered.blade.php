@@ -82,7 +82,8 @@
                       </div>
                   </div>
               </form>--}}
-            <div class="button" ngf-select="upload($file)">Upload on file select</div>
+
+            <div class="button" ngf-select="upload($file)">Upload on file select!</div>
 
         {{--    <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
                     accept="image/*" ngf-max-height="1000" ngf-max-size="10MB">
