@@ -40,6 +40,7 @@ app.controller('MyCtrl', ['$scope', '$http', 'Upload', '$timeout', function ($sc
     }
 
     $scope.upload = function (file) {
+        console.log('uploading....');
         Upload.upload({
             url: '/fileUpload2',
             data: {
