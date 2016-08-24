@@ -72,7 +72,7 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
         'is_mother_paulinian': '',
         'mother_occupation': '',
         'mother_office': '',
-        'defaultPicture': ''
+
 
     };
 

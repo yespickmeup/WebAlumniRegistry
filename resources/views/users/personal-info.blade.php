@@ -18,10 +18,12 @@
                         <input type="hidden" ng-model="defaultPicture"
                                value="{{ URL::asset('src/images/sys/picture.jpg') }}">
                         @if(!Auth::guest())
-                            <img class="img-thumbnail imgInp img-responsive"
+                            <img
+                                    class="img-thumbnail imgInp img-responsive"
                                     alt="Cinque Terre"
                                     width="200px" height="120px%;"
-                                    ng-src="<%imageSource%>"
+                                    ng-src="<%user.imageSource%>"
+
                             >
                         @else
                             <img src="{{ URL::asset('src/images/sys/picture.jpg') }}"

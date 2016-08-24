@@ -17,8 +17,14 @@
         }
     </style>
 
+    <script src="{{ URL::to('src/js/file_upload/ng-file-upload.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::to('src/js/file_upload/ng-file-upload-shim.js') }}" type="text/javascript"></script>
+
     <script src="{{ URL::to('src/js/user-edit.js') }}" type="text/javascript"></script>
     <script src="{{ URL::to('src/js/treasure-overlay-spinner.js') }}" type="text/javascript"></script>
+
+
+    <script src="{{ URL::to('src/js/modules/tabs.js') }}" type="text/javascript"></script>
 </head>
 <body>
 
@@ -90,6 +96,7 @@ Unauthorized!
                             var loginUrl = '{{ url('/login') }}';
                             var user = JSON.parse(decodeURIComponent(something.getAttribute("data-json")))
                             var publicUrl = '{{URL::asset('/'). '' . 'src/images/uploads/'}}';
+                            var photo = '{{ URL::asset('src/images/uploads/') }}';
                         </script>
                     </form>
                 </div>

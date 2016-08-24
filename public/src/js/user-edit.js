@@ -11,7 +11,7 @@ $(document).ready(function () {
 })
 
 /* Start of Angular App*/
-var validationApp = angular.module('validationApp', ['smart-table', 'treasure-overlay-spinner'], function ($interpolateProvider) {
+var validationApp = angular.module('validationApp', ['ngFileUpload', 'smart-table', 'treasure-overlay-spinner', 'ui.bootstrap', 'tabs'], function ($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 
@@ -32,7 +32,7 @@ function run($rootScope) {
     };
 }
 
-validationApp.controller('mainController', ['$scope', '$http', function ($scope, $http) {
+validationApp.controller('mainController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
 
     $scope.clearUser = false;
     /* Initialize User Input Fields*/
@@ -66,21 +66,49 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         'mother_occupation': user.mother_occupation,
         'mother_office': user.mother_office,
         'defaultPicture': '',
-        'imageSource': publicUrl+user.alumni_no+'.jpg'
+        'imageSource': photo + '/' + user.alumni_no + '.jpg'
     };
 
-    console.log('path: '+$scope.user.imageSource);
+
     /*Change Picture*/
-    $scope.imageSource = $scope.defaultPicture;
+
+    $scope.photoFile = null;
     $scope.fileNameChaged = function (element) {
+        $scope.photoFile = element.files[0];
         var reader = new FileReader();
         reader.onload = function (e) {
             $scope.$apply(function () {
-                $scope.imageSource = e.target.result;
-
+                $scope.user.imageSource = e.target.result;
+                uploadImage($scope.user.alumni_no);
             });
         }
         reader.readAsDataURL(element.files[0]);
+    }
+
+    function uploadImage(filename) {
+
+        if ($scope.photoFile) {
+            $scope.photoFile.upload = Upload.upload({
+                url: '/fileUpload2',
+                data: {
+                    _token: myToken,
+                    file: $scope.photoFile,
+                    filename: filename,
+                }
+            });
+            $scope.photoFile.upload.then(function (response) {
+                $timeout(function () {
+                    $scope.photoFile.result = response.data;
+                    console.log(response.data);
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                $scope.photoFile.progress = Math.min(100, parseInt(100.0 *
+                    evt.loaded / evt.total));
+            });
+        }
     }
 
     $scope.clearUser = function (isValid) {
@@ -299,7 +327,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $data = {
             '_token': myToken,
             'user_id': $scope.user.id,
-            'user_involvement':  data.activity,
+            'user_involvement': data.activity,
         }
         $http.post('/api/user_involvement/save', $data)
             .success(function (data, status, headers, config) {
@@ -338,7 +366,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $data = {
             '_token': myToken,
             'id': $scope.activitiesOnEdit.id,
-            'user_involvement':  $scope.activitiesOnEdit.activity,
+            'user_involvement': $scope.activitiesOnEdit.activity,
         }
         $http.post('/api/user_involvement/update', $data)
             .success(function (data, status, headers, config) {
@@ -478,12 +506,12 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $data = {
             '_token': myToken,
             'id': $scope.memberonEdit.id,
-            'name':  $scope.memberonEdit.name,
-            'relation':  $scope.memberonEdit.relation,
-            'name_before_married':  $scope.memberonEdit.before_married,
-            'address':  $scope.memberonEdit.residence,
-            'occupation':  $scope.memberonEdit.occupation,
-            'office_address':  $scope.memberonEdit.office
+            'name': $scope.memberonEdit.name,
+            'relation': $scope.memberonEdit.relation,
+            'name_before_married': $scope.memberonEdit.before_married,
+            'address': $scope.memberonEdit.residence,
+            'occupation': $scope.memberonEdit.occupation,
+            'office_address': $scope.memberonEdit.office
         }
         $http.post('/api/user_family/update', $data)
             .success(function (data, status, headers, config) {
@@ -536,12 +564,12 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
         $data = {
             '_token': myToken,
             'user_id': $scope.user.id,
-            'name':  data.name,
-            'relation':  data.relation,
-            'before_married':  data.before_married,
-            'residence':  data.residence,
-            'occupation':  data.occupation,
-            'office':  data.office
+            'name': data.name,
+            'relation': data.relation,
+            'before_married': data.before_married,
+            'residence': data.residence,
+            'occupation': data.occupation,
+            'office': data.office
         }
         $http.post('/api/user_family/save', $data)
             .success(function (data, status, headers, config) {
