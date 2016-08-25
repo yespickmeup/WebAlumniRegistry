@@ -30,3 +30,9 @@ http://wet-boew.github.io/wet-boew-styleguide/v4/design/panels-en.html - design
  https://scotch.io/tutorials/simple-and-easy-laravel-login-authentication - login
  http://image.intervention.io/getting_started/installation - file upload
  https://jsfiddle.net/9wLoc63t/1/ - ng-file-upload
+
+
+
+  git add .
+     git commit -m "$*"
+     git push

@@ -70,10 +70,13 @@ Route::get('/api/users/{email}', [
     'as' => 'user.check',
     'uses' => 'UserController@emailExists'
 ]);
+
+
 Route::get('/api/user_involvements/{user_id}', [
     'as' => 'user_involvements',
     'uses' => 'UserController@userInvolvements'
 ]);
+
 Route::get('/api/user_family/{user_id}', [
     'as' => 'user_family',
     'uses' => 'UserController@userIAlumniFamilyMembers'
@@ -156,13 +159,19 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'UserController@approval'
 
     ]);
+
     Route::get('/users', [
         'as' => 'users.index',
         'uses' => 'UserController@index'
-
     ]);
 
 
+    Route::get('/settings', [
+        'as' => 'settings',
+        function () {
+            return view('settings.settings');
+        }
+    ]);
 
     Route::resource('users', 'UserController');
 

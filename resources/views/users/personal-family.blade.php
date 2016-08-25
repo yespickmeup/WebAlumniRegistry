@@ -109,15 +109,14 @@
                 <br>
                 @if(Auth::guest())
                     <div class="btn-group">
-                        <a href="" class="btn btn-default pull-left" ng-click="doBack()">Previous</a>
+                        <a href="" class="btn btn-default pull-left" ng-click="gotoActivities()">Previous</a>
                         <a href="" class="btn btn-success pull-right"  ng-disabled="userForm.$invalid"
                            ng-click="submitForm(userForm.$valid)">Save</a>
                     </div>
 
                 @else
                     <div class="btn-group ">
-                        <a href="#" class="btn btn-default" ng-click="doBack()">Previous</a>
-
+                        <a href="" class="btn btn-default" ng-click="gotoActivities()">Previous</a>
                     </div>
                 @endif
 

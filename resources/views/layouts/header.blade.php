@@ -35,8 +35,8 @@
                             @if (Auth::user()->hasRole('admin'))
                                 <li><a href="{{ route('users.approval') }}"><i class="fa fa-check"></i>
                                         </i>Approvals</a></li>
-                                <li><a href="{{ route('users.approval', Auth::user()->id) }}"><i class="fa fa-graduation-cap"></i>
-                                        </i>Courses & Majors</a></li>
+                                <li><a href="{{ route('settings') }}"><i class="fa fa-wrench"></i></i>
+                                        </i>Settings</a></li>
                                 <li><a href="{{ route('users.index') }}"><i class="fa fa-btn fa-users">
                                         </i>&nbsp;Users</a></li>
                             @endif
