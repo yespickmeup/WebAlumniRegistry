@@ -261,8 +261,8 @@
                     <br>
                     @if(Auth::guest())
                         <div class="btn-group">
-                            <a href="" class="btn btn-default pull-left" ng-click="doBack()">Back</a>
-                            <a href="" class="btn btn-primary pull-right" ng-click="selectPersonalActivitiesTab(pane1)">Next</a>
+                            <a href="" class="btn btn-default pull-left" ng-click="doBack()">Back to Login</a>
+                            <a href="" class="btn btn-primary pull-right" ng-click="gotoActivities()">Next</a>
                         </div>
 
                     @else

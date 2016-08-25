@@ -34,6 +34,22 @@ function run($rootScope) {
 
 validationApp.controller('mainController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
 
+
+    $scope.active1 = 0;
+
+    $scope.gotoActivities= function(){
+        $scope.active1 = 1;
+    }
+    $scope.gotoPersonalInfo= function(){
+
+        $scope.active1 = 0;
+    }
+    $scope.gotoFamily= function(){
+
+        $scope.active1 = 2;
+    }
+
+
     $scope.clearUser = false;
     /* Initialize User Input Fields*/
     $scope.user = {

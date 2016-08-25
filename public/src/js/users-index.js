@@ -2,7 +2,6 @@
 var validationApp = angular.module('validationApp', ['smart-table', 'treasure-overlay-spinner'], function ($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
-
 });
 
 angular.module('validationApp').run(run);
