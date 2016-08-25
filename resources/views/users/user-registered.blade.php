@@ -83,21 +83,21 @@
                   </div>
               </form>--}}
 
-            <div class="button" ngf-select="upload($file)">Upload on file select!</div>
+           {{-- <div class="button" ngf-select="upload($file)">Upload on file select!</div>--}}
 
         {{--    <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
                     accept="image/*" ngf-max-height="1000" ngf-max-size="10MB">
                 Select File
             </button>
 --}}
-
+{{--
             <br><br>
             File:
             <div>
                 <%f.name%> <%errFile.name%> <%errFile.$error%> <%errFile.$errorParam%>
                 <span class="progress" ng-show="f.progress >= 0"></span>
                 <%errorMsg%>
-            </div>
+            </div>--}}
 
             <script>
                 var myToken = '{{ Session::token() }}';
