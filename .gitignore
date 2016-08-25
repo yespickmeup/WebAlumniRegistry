@@ -1,7 +1,10 @@
 /vendor
 /node_modules
 /public/storage
+<<<<<<< HEAD
 /public/pma
+=======
+>>>>>>> dcfd7f95aad887e37f353df108d050ba5a49f5b9
 /public/src/images
 Homestead.yaml
 Homestead.json
