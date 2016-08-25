@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Alumni Registry | Signup</title>
+    <link rel="icon" href="{{ URL::asset('src/images/sys/spud-alumni-logo.ico') }}"/>
     @include('layouts.css')
     @include('layouts.js')
     <link rel="stylesheet" href="{{ URL::to('src/css/register.css') }}"/>

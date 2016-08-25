@@ -102,7 +102,6 @@ Route::get('/api/user/roles/{user_id}', [
 
 
 
-
 Route::auth();
 
 Route::group(['middleware' => ['auth']], function () {
@@ -146,10 +145,11 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'HomeController@index'
     ]);
 
-    Route::post('/account', [
-        'as' => 'account',
-        'uses' => 'UserController@account'
+    Route::get('/account/{id}', [
+        'as' => 'user.account',
+        'uses' => 'UserController@userAccount'
     ]);
+
 
     Route::get('/approval', [
         'as' => 'users.approval',

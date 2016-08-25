@@ -114,7 +114,7 @@ validationApp.controller('mainController', ['$scope', '$http', function ($scope,
                     data.is_mother_paulinian = obj.is_mother_paulinian;
                     data.mother_occupation = obj.mother_occupation;
                     data.mother_office = obj.mother_office;
-                    data.roles = ['admin', 'user'];
+                    data.roles = '';
                     $scope.users.push(data);
 
                 });
