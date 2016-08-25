@@ -1,3 +1,8 @@
+
+
+
+
+
 <div class="panel panel-default col-md-6">
     <div class="alert alert-success fade in" ng-show="showUpdateSuccess">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
