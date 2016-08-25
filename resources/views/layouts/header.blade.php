@@ -30,14 +30,14 @@
                             {{ Auth::user()->first_name . ' ' . Auth::user()->middle_name . ' ' .  Auth::user()->last_name}} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('users.edit', Auth::user()->id) }}"><i class="fa fa-btn fa-user">
+                            <li><a href="{{ route('user.account', Auth::user()->id) }}"><i class="fa fa-btn fa-user">
                                     </i>&nbsp;&nbsp;Account</a></li>
                             @if (Auth::user()->hasRole('admin'))
-                                <li><a href="{{ route('users.approval', Auth::user()->id) }}"><i class="fa fa-check"></i>
+                                <li><a href="{{ route('users.approval') }}"><i class="fa fa-check"></i>
                                         </i>Approvals</a></li>
                                 <li><a href="{{ route('users.approval', Auth::user()->id) }}"><i class="fa fa-graduation-cap"></i>
                                         </i>Courses & Majors</a></li>
-                                <li><a href="{{ route('users.index', Auth::user()->id) }}"><i class="fa fa-btn fa-users">
+                                <li><a href="{{ route('users.index') }}"><i class="fa fa-btn fa-users">
                                         </i>&nbsp;Users</a></li>
                             @endif
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>&nbsp;Logout</a></li>

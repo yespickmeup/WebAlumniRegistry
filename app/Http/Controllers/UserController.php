@@ -342,6 +342,7 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $user = User::find($id);
@@ -349,6 +350,17 @@ class UserController extends Controller
         $userRole = $user->roles->lists('id', 'id')->toArray();
 
         return view('users.edit', compact('user', 'roles', 'userRole'));
+    }
+
+    public function userAccount($id)
+    {
+        $user = User::find($id);
+        $roles = Role::lists('display_name', 'id');
+        $userRole = $user->roles->lists('id', 'id')->toArray();
+
+       /* return response()->json(['users'=>$user]);*/
+
+     return view('users.edit', compact('user', 'roles', 'userRole'));
     }
 
     /**
