@@ -1,11 +1,8 @@
 /vendor
 /node_modules
 /public/storage
-<<<<<<< HEAD
 /public/pma
-=======
->>>>>>> 7cc72fa3a6248a9253544a47e7c826a7631ef828
-/public/src
+/public/src/images
 Homestead.yaml
 Homestead.json
 .env
