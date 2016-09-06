@@ -14,6 +14,25 @@
         form.tab-form-demo .tab-pane {
             margin: 20px 20px;
         }
+
+        .modal {
+            text-align: center;
+            padding: 0 !important;
+        }
+
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px;
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
     </style>
 
     <script src="{{ URL::to('src/js/settings/settings.js') }}" type="text/javascript"></script>
@@ -29,6 +48,7 @@
     <uib-tabset active="active">
         <uib-tab index="0" heading="Year & Level">
             <br>
+
             <div ng-controller="yearController">
                 @include('settings.yearlevel')
             </div>
@@ -43,7 +63,9 @@
         </uib-tab>
     </uib-tabset>
 
-
+    <script>
+        var baseURL = '{{ url('/') }}';
+    </script>
 
 
 </div>

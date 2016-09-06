@@ -30,9 +30,7 @@ Route::get('/home', 'HomeController@index');
 
 
 Route::get('resizeImage', 'UploadController@resizeImage');
-Route::post('resizeImagePost',['as'=>'resizeImagePost','uses'=>'UploadController@resizeImagePost']);
-
-
+Route::post('resizeImagePost', ['as' => 'resizeImagePost', 'uses' => 'UploadController@resizeImagePost']);
 
 
 Route::post('upload', 'UploadController@upload');
@@ -101,6 +99,63 @@ Route::get('/api/user/roles/{user_id}', [
 ]);
 
 
+/* Level Routes*/
+
+Route::get('api/levels',[
+    'as' => 'levels',
+    'uses' => 'LevelController@getLevels'
+]);
+
+Route::post('api/level_add',[
+    'as' => 'level.add',
+    'uses' => 'LevelController@postAddLevel'
+]);
+Route::post('api/level_update',[
+    'as' => 'level.update',
+    'uses' => 'LevelController@postUpdateLevel'
+]);
+Route::post('api/level_delete',[
+    'as' => 'level.delete',
+    'uses' => 'LevelController@postDeleteLevel'
+]);
+
+/* End of Level Routes*/
+
+
+
+
+
+
+Route::get('mail', [
+    'as' => 'mail',
+    function () {
+
+      dd(Config::get('mail'));
+      /*  Mail::send('templates/mail-activation', ['user' => 'Alumni Association'], function ($m) {
+
+            $m->to('rpascua.synsoftech@gmail.com', 'rpascua.synsoftech@gmail.com')->subject('testing...');
+        });
+        return "mail sent!";*/
+
+    }
+]);
+
+
+Route::get('/email', [
+    'as' => 'email',
+    function(){
+        return view('emails.email');
+    }
+]);
+
+
+Route::post('/sendEmail', [
+    'as' => 'sendEmail',
+    'uses' => 'EmailController@send',
+]);
+
+
+
 
 
 
@@ -108,6 +163,8 @@ Route::get('/api/user/roles/{user_id}', [
 Route::auth();
 
 Route::group(['middleware' => ['auth']], function () {
+
+
 
 
     Route::post('/api/user_involvement/save', [
