@@ -31,17 +31,17 @@ function run($rootScope) {
 }
 
 
-validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeout', function ($scope, $http, Upload, $timeout) {
+validationApp.controller('mainController', ['$scope', '$http', 'Upload', '$timeout', 'courseService', function ($scope, $http, Upload, $timeout, courseService) {
 
     $scope.active1 = 0;
 
-    $scope.gotoActivities= function(){
+    $scope.gotoActivities = function () {
         $scope.active1 = 1;
     }
-    $scope.gotoPersonalInfo= function(){
+    $scope.gotoPersonalInfo = function () {
         $scope.active1 = 0;
     }
-    $scope.gotoFamily= function(){
+    $scope.gotoFamily = function () {
         $scope.active1 = 2;
     }
 
@@ -51,10 +51,87 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
 
         $scope.photoFile = file;
 
-        console.log('image src: '+ $scope.photoFile);
+        console.log('image src: ' + $scope.photoFile);
     }
 
     /* Initialize User Input Fields*/
+
+    $scope.courses = {
+        availableOptions: [],
+        selectedOption: {id: 0, course: ''}
+    };
+
+    courseService.getCourses().then(function (resp) {
+        var courses = JSON.stringify(resp.data['courses']);
+        $.each(JSON.parse(courses), function (idx, obj) {
+            var data = {};
+            data.id = obj.id;
+            data.course = obj.course;
+            $scope.courses.availableOptions.push(data);
+        });
+    });
+
+    $scope.submitCourse = function () {
+        $scope.user.course = $scope.courses.selectedOption.course;
+    }
+
+    $scope.levels = {
+        availableOptions: [],
+        selectedOption: {id: 0, level: ''}
+    };
+    courseService.getLevels().then(function (resp) {
+        var levels = JSON.stringify(resp.data['levels']);
+        $.each(JSON.parse(levels), function (idx, obj) {
+            var data = {};
+            data.id = obj.id;
+            data.level = obj.level;
+            $scope.levels.availableOptions.push(data);
+        });
+    });
+
+    $scope.submitLevel = function () {
+        $scope.user.level = $scope.levels.selectedOption.level;
+    }
+
+    $scope.years = {
+        availableOptions: [],
+        selectedOption: {id: 0, year: ''}
+    };
+    courseService.getYears().then(function (resp) {
+        var years = JSON.stringify(resp.data['years']);
+        $.each(JSON.parse(years), function (idx, obj) {
+            var data = {};
+            data.id = obj.id;
+            data.year = obj.year;
+            $scope.years.availableOptions.push(data);
+        });
+    });
+
+    $scope.submitYear = function () {
+        $scope.user.year = $scope.years.selectedOption.year;
+    }
+
+    $scope.majors = {
+        availableOptions: [],
+        selectedOption: {id: 0, major: ''}
+    };
+
+
+    courseService.getMajors().then(function (resp) {
+        var majors = JSON.stringify(resp.data['majors']);
+        $.each(JSON.parse(majors), function (idx, obj) {
+            var data = {};
+            data.id = obj.id;
+            data.major = obj.major;
+            $scope.majors.availableOptions.push(data);
+        });
+    });
+
+    $scope.submitMajor = function () {
+        $scope.user.major = $scope.majors.selectedOption.major;
+    }
+
+
     $scope.user = {
         'alumni_no': '',
         'student_no': '',
@@ -142,7 +219,7 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
         /* Submit Form for saving*/
         console.log('isValid: ' + isValid);
         if (isValid) {
-             checkEmail();
+            checkEmail();
         }
     };
 
@@ -171,7 +248,7 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
                 /* console.log('user: '+JSON.stringify(user));*/
                 /*  console.log('collection: '+JSON.stringify(collection));
                  console.log('activity_names: '+JSON.stringify(activity_names));*/
-               /* console.log('name: ' + name);*/
+                /* console.log('name: ' + name);*/
 
                 uploadImage(user.alumni_no);
                 window.location.href = loginUrl;
@@ -179,13 +256,13 @@ validationApp.controller('mainController', ['$scope', '$http', 'Upload','$timeou
             })
             .error(function (data, status, headers, config) {
 
-                console.log('image: ' +  data['image']);
+                console.log('image: ' + data['image']);
                 console.log('status: ' + status);
                 $scope.spinner.off();
             })
         ;
 
-        function uploadImage(filename){
+        function uploadImage(filename) {
             if ($scope.photoFile) {
                 $scope.photoFile.upload = Upload.upload({
                     url: '/fileUpload2',
@@ -440,5 +517,57 @@ validationApp.directive('pane', function () {
 });
 
 
+validationApp.service('courseService', function ($http) {
+    this.getCourses = function () {
+        return $http({
+            method: 'GET',
+            url: baseURL + '/api/courses'
+        })
+            .success(function (data, status, headers, config) {
+                /* console.log('getCourses() success ');*/
+            })
+            .error(function (data, status, headers, config) {
+                console.log('getCourses() error');
+            });
+    };
 
+    this.getLevels = function () {
+        return $http({
+            method: 'GET',
+            url: baseURL + '/api/levels'
+        })
+            .success(function (data, status, headers, config) {
+                /*console.log('getlevels() success ');*/
+            })
+            .error(function (data, status, headers, config) {
+                console.log('getlevels() error');
+            });
+    };
+
+    this.getYears = function () {
+        return $http({
+            method: 'GET',
+            url: baseURL + '/api/years'
+        })
+            .success(function (data, status, headers, config) {
+                /* console.log('getYears() success ');*/
+            })
+            .error(function (data, status, headers, config) {
+                console.log('getYears() error');
+            });
+    };
+
+    this.getMajors = function () {
+        return $http({
+            method: 'GET',
+            url: baseURL + '/api/majors'
+        })
+            .success(function (data, status, headers, config) {
+                /* console.log('getMajors() success ');*/
+            })
+            .error(function (data, status, headers, config) {
+                console.log('getMajors() error');
+            });
+    };
+});
     

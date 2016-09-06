@@ -30,9 +30,7 @@ Route::get('/home', 'HomeController@index');
 
 
 Route::get('resizeImage', 'UploadController@resizeImage');
-Route::post('resizeImagePost',['as'=>'resizeImagePost','uses'=>'UploadController@resizeImagePost']);
-
-
+Route::post('resizeImagePost', ['as' => 'resizeImagePost', 'uses' => 'UploadController@resizeImagePost']);
 
 
 Route::post('upload', 'UploadController@upload');
@@ -101,6 +99,123 @@ Route::get('/api/user/roles/{user_id}', [
 ]);
 
 
+/* Level Routes*/
+
+Route::get('api/levels',[
+    'as' => 'levels',
+    'uses' => 'LevelController@getLevels'
+]);
+
+Route::post('api/level_add',[
+    'as' => 'level.add',
+    'uses' => 'LevelController@postAddLevel'
+]);
+Route::post('api/level_update',[
+    'as' => 'level.update',
+    'uses' => 'LevelController@postUpdateLevel'
+]);
+Route::post('api/level_delete',[
+    'as' => 'level.delete',
+    'uses' => 'LevelController@postDeleteLevel'
+]);
+
+/* End of Level Routes*/
+/* Year Routes */
+
+Route::get('api/years',[
+    'as' => 'years',
+    'uses' => 'YearController@getYear'
+]);
+Route::post('api/year_add',[
+    'as' => 'year.add',
+    'uses' => 'YearController@postAddYear'
+]);
+Route::post('api/year_update',[
+    'as' => 'year.update',
+    'uses' => 'YearController@postUpdateYear'
+]);
+Route::post('api/year_delete',[
+    'as' => 'year.delete',
+    'uses' => 'YearController@postDeleteYear'
+]);
+/* End of Year Routes*/
+
+/* Start of Course Routes */
+
+Route::get('api/courses',[
+    'as' => 'courses',
+    'uses' => 'CourseController@getCourses'
+]);
+Route::post('api/course_add',[
+    'as' => 'course.add',
+    'uses' => 'CourseController@postAddCourse'
+]);
+Route::post('api/course_update',[
+    'as' => 'course.update',
+    'uses' => 'CourseController@postUpdateCourse'
+]);
+Route::post('api/course_delete',[
+    'as' => 'course.delete',
+    'uses' => 'CourseController@postDeleteCourse'
+]);
+
+/* End of Course Routes*/
+
+/* Start of Major Routes */
+
+Route::get('api/majors',[
+    'as' => 'majors',
+    'uses' => 'MajorController@getMajors'
+]);
+Route::post('api/major_add',[
+    'as' => 'major.add',
+    'uses' => 'MajorController@postAddMajor'
+]);
+Route::post('api/major_update',[
+    'as' => 'major.update',
+    'uses' => 'MajorController@postUpdateMajor'
+]);
+Route::post('api/major_delete',[
+    'as' => 'major.delete',
+    'uses' => 'MajorController@postDeleteMajor'
+]);
+
+/* End of Major Routes*/
+
+
+
+
+
+Route::get('mail', [
+    'as' => 'mail',
+    function () {
+
+      dd(Config::get('mail'));
+      /*  Mail::send('templates/mail-activation', ['user' => 'Alumni Association'], function ($m) {
+
+            $m->to('rpascua.synsoftech@gmail.com', 'rpascua.synsoftech@gmail.com')->subject('testing...');
+        });
+        return "mail sent!";*/
+
+    }
+]);
+
+
+Route::get('/email', [
+    'as' => 'email',
+    function(){
+        return view('emails.email');
+    }
+]);
+
+
+Route::post('/sendEmail', [
+    'as' => 'sendEmail',
+    'uses' => 'EmailController@send',
+]);
+
+
+
 
 
 
@@ -108,6 +223,8 @@ Route::get('/api/user/roles/{user_id}', [
 Route::auth();
 
 Route::group(['middleware' => ['auth']], function () {
+
+
 
 
     Route::post('/api/user_involvement/save', [

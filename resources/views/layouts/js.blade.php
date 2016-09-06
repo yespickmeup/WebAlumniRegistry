@@ -15,8 +15,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
 <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
-
-
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js"></script>
+<script src="https://rawgit.com/dwmkerr/angular-modal-service/master/dst/angular-modal-service.js"></script>
 
 <script src="{{ URL::to('src/js/smart-table.debug.js') }}"></script>
 <script src="{{ URL::to('src/js/lrInfiniteScrollPlugin.js') }}"></script>
