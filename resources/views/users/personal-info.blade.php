@@ -167,43 +167,30 @@
             <div class="form-group">
                 <div class="row col-md-6">
                     <label for="user.level">Level</label>
-                    <select class="input-large form-control" ng-model="user.level">
-                        <option value="Elementary">Elementary</option>
-                        <option value="High School">High School</option>
-                        <option value="College">College</option>
-                    </select>
+                    <select class="input-large form-control"
+                            ng-options="option.level for option in levels.availableOptions track by option.id"
+                            ng-model="levels.selectedOption" ng-change="submitLevel()"></select>
+
                 </div>
                 <div class="row col-md-6">
                     <label for="user.year">Year</label>
-                    <select class="input-large form-control" ng-model="user.year">
-                        <option value="First Year">First Year</option>
-                        <option value="Second Year">Second Year</option>
-                        <option value="Third Year">Third Year</option>
-                        <option value="Fourth Year">Fourth Year</option>
-                    </select>
+                    <select class="input-large form-control"
+                            ng-options="option.year for option in years.availableOptions track by option.id"
+                            ng-model="years.selectedOption" ng-change="submitYear()"></select>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row col-md-6">
                     <label for="user.course">Course</label>
-                    <select class="input-large form-control" ng-model="user.course">
-                        <option value="BS Mathematics">BS Mathematics</option>
-                        <option value="BS Physics">BS Physics</option>
-                        <option value="BS Biology">BS Biology</option>
-                        <option value="BS Chemistry">BS Chemistry</option>
-                        <option value="BS Marine Biology/Science">BS Marine Biology/Science</option>
-                    </select>
+                    <select class="input-large form-control"
+                            ng-options="option.course for option in courses.availableOptions track by option.id"
+                            ng-model="courses.selectedOption" ng-change="submitCourse()"></select>
                 </div>
                 <div class="row col-md-6">
                     <label for="user.major">Major</label>
-
-                    <select class="input-large form-control" ng-model="user.major">
-                        <option value="Artificial Intelligence">Artificial Intelligence</option>
-                        <option value="Calculus">Calculus</option>
-                        <option value="Computer Architecture">Computer Architecture</option>
-                        <option value="Data Management">Data Management</option>
-                        <option value="Information Management">Information Management</option>
-                    </select>
+                    <select class="input-large form-control"
+                            ng-options="option.major for option in majors.availableOptions track by option.id"
+                            ng-model="majors.selectedOption" ng-change="submitMajor()"></select>
                 </div>
             </div>
             <div class="form-group">

@@ -1,20 +1,38 @@
-<div class="panel panel-default col-md-6">
+
+{{-- Alert for Level --}}
+<div class="alert alert-success fade in" ng-show="showAddLevelSuccess">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Successfully Added!</strong>
+</div>
+<div class="alert alert-success fade in" ng-show="showUpdateLevelSuccess">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Successfully Updated!</strong>
+</div>
+<div class="alert alert-warning fade in" ng-show="showDeleteLevelSuccess">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Successfully Deleted!</strong>
+</div>
+
+
+{{-- Alert for Year --}}
+<div class="alert alert-success fade in" ng-show="showAddYearSuccess">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Successfully Added!</strong>
+</div>
+<div class="alert alert-success fade in" ng-show="showUpdateYearSuccess">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Successfully Updated!</strong>
+</div>
+<div class="alert alert-warning fade in" ng-show="showDeleteYearSuccess">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Successfully Deleted!</strong>
+</div>
+
+
+<div class="panel panel-default col-md-6" >
     <form name="myForm">
         <br>
-        <div class="alert alert-success fade in" ng-show="showAddLevelSuccess">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Successfully Added!</strong>
-        </div>
-        <div class="alert alert-success fade in" ng-show="showUpdateLevelSuccess">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Successfully Updated!</strong>
-        </div>
-        <div class="alert alert-warning fade in" ng-show="showDeleteLevelSuccess">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Successfully Deleted!</strong>
-        </div>
         <div class="panel-body">
-
             <div class="row ">
                 <div class="col-md-6"><h2>Level</h2></div>
                 <div class="col-md-6">
@@ -24,12 +42,11 @@
                     </button>
                 </div>
             </div>
-
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Enter Level" name="inputLevel"
                        id="inputLevel"
                        ng-model="inputLevel"
-                       ng-keydown="($event.which === 13 || $event.which === 32) && addLevel(myForm)"
+                       ng-keydown="($event.which === 13) && addLevel(myForm)"
                        ng-minlength="1"
                        ng-maxlength="1000"
                        required
@@ -121,6 +138,7 @@
             </div>
         </script>
 
+
     </form>
 
 </div>
@@ -128,10 +146,8 @@
 
 <div class="panel panel-default col-md-6">
     <form name="myFormYear">
-        <div class="alert alert-success fade in" ng-show="showUpdateSuccess">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success! </strong>Account <b>[<%userName%>]</b>, successfully approved!
-        </div>
+        <br>
+
         <div class="panel-body">
             <div class="row ">
                 <div class="col-md-6"><h2>Year</h2></div>
@@ -147,7 +163,7 @@
                 <input type="text" class="form-control" placeholder="Enter Year" name="inputYear"
                        id="inputYear"
                        ng-model="inputYear"
-                       ng-keydown="($event.which === 13 || $event.which === 32) && addYear(myFormYear)"
+                       ng-keydown="($event.which === 13 ) && addYear(myFormYear)"
                        ng-minlength="1"
                        ng-maxlength="1000"
                        required

@@ -120,7 +120,67 @@ Route::post('api/level_delete',[
 ]);
 
 /* End of Level Routes*/
+/* Year Routes */
 
+Route::get('api/years',[
+    'as' => 'years',
+    'uses' => 'YearController@getYear'
+]);
+Route::post('api/year_add',[
+    'as' => 'year.add',
+    'uses' => 'YearController@postAddYear'
+]);
+Route::post('api/year_update',[
+    'as' => 'year.update',
+    'uses' => 'YearController@postUpdateYear'
+]);
+Route::post('api/year_delete',[
+    'as' => 'year.delete',
+    'uses' => 'YearController@postDeleteYear'
+]);
+/* End of Year Routes*/
+
+/* Start of Course Routes */
+
+Route::get('api/courses',[
+    'as' => 'courses',
+    'uses' => 'CourseController@getCourses'
+]);
+Route::post('api/course_add',[
+    'as' => 'course.add',
+    'uses' => 'CourseController@postAddCourse'
+]);
+Route::post('api/course_update',[
+    'as' => 'course.update',
+    'uses' => 'CourseController@postUpdateCourse'
+]);
+Route::post('api/course_delete',[
+    'as' => 'course.delete',
+    'uses' => 'CourseController@postDeleteCourse'
+]);
+
+/* End of Course Routes*/
+
+/* Start of Major Routes */
+
+Route::get('api/majors',[
+    'as' => 'majors',
+    'uses' => 'MajorController@getMajors'
+]);
+Route::post('api/major_add',[
+    'as' => 'major.add',
+    'uses' => 'MajorController@postAddMajor'
+]);
+Route::post('api/major_update',[
+    'as' => 'major.update',
+    'uses' => 'MajorController@postUpdateMajor'
+]);
+Route::post('api/major_delete',[
+    'as' => 'major.delete',
+    'uses' => 'MajorController@postDeleteMajor'
+]);
+
+/* End of Major Routes*/
 
 
 

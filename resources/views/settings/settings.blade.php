@@ -37,6 +37,8 @@
 
     <script src="{{ URL::to('src/js/settings/settings.js') }}" type="text/javascript"></script>
     <script src="{{ URL::to('src/js/settings/yearlevelController.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::to('src/js/settings/courseController.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::to('src/js/settings/majorController.js') }}" type="text/javascript"></script>
     <script src="{{ URL::to('src/js/treasure-overlay-spinner.js') }}" type="text/javascript"></script>
 </head>
 <body>
@@ -46,6 +48,21 @@
 
 
     <uib-tabset active="active">
+        <uib-tab index="2" heading="Courses">
+            <br>
+
+            <div ng-controller="courseController">
+                @include('settings.courses')
+            </div>
+        </uib-tab>
+        <uib-tab index="3" heading="Majors">
+            <br>
+
+            <div ng-controller="majorController">
+                @include('settings.major')
+            </div>
+        </uib-tab>
+
         <uib-tab index="0" heading="Year & Level">
             <br>
 
@@ -55,12 +72,6 @@
         </uib-tab>
 
 
-        <uib-tab index="2" heading="Courses">
-            Static content2
-        </uib-tab>
-        <uib-tab index="3" heading="Majors">
-            Static content2
-        </uib-tab>
     </uib-tabset>
 
     <script>

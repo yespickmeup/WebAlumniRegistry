@@ -103,6 +103,7 @@
             <script>
                 var myToken = '{{ Session::token() }}';
                 var publicUrl = '{{URL::asset('/'). '' . 'src/images/uploads/'}}';
+
             </script>
         </div>
     </div>
